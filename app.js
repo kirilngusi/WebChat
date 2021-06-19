@@ -1,9 +1,11 @@
 const express = require('express')
 const app = express()
+const PORT = process.env.PORT || 5000
+
 const http = require('http').createServer(app)
 const io = require('socket.io')(http);
 const fs = require('fs');
-const PORT = process.env.PORT || 5000
+// const PORT = process.env.PORT || 5000
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
@@ -58,6 +60,7 @@ io.on('connection', (socket) => {
 
 
 app.get('/users/home', (req,res) => {
+
   res.render('index.html')
 })
 

@@ -1,14 +1,17 @@
-const io = require('socket.io')(5000);
-const socket = io('http://localhost:5000');
-const express = require('express');
+// const io = require('socket.io')(5000);
 const socket = io();
+const express = require('express');
+
 
 const name = document.querySelector('.input-lg')
 
-let textarea = document.getElementById('.textarea');
+let textarea = document.querySelector('#textarea');
 let messageArea = document.querySelector('.message__area');
 
 //name
+// const name = prompt('What is your name?')
+// appendMessage('You joined')
+// socket.emit('new-user', name)
 
 
 textarea.addEventListener('keyup', (e) => {
