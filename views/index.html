@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App</title>
+    <link href="/css/style.css" rel="stylesheet"></head>
+    <!-- <script src="/client.js"></script> -->
+    <!-- <script defer src="/public/client.js"></script> -->
+<body>
+    
+    <section class="chat__section">
+        <div class="brand">
+            <div class="left"></div>
+                <h1>Room Chat</h1>
+        </div>
+
+        
+        <div class="message__area"></div>
+        <div class="msg-field">
+<!-- 
+            <textarea id="textarea" cols="30" rows="1" placeholder="Write a message...">
+        </textarea> -->
+        <form>
+            <input id="textarea" type="text"  placeholder="" required="">
+            <button type="submit" id="send-button"> Send </button>
+        </form>
+    
+        </div>
+    </section>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js"></script>
+    
+    <script>
+
+    </script>
+</body>
+
+</html> 

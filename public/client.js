@@ -1,12 +1,15 @@
+const io = require('socket.io')(5000);
+const socket = io('http://localhost:5000');
+const express = require('express');
 const socket = io();
 
-let name;
+const name = document.querySelector('.input-lg')
 
-let textarea = document.querySelector('#textarea');
+let textarea = document.getElementById('.textarea');
 let messageArea = document.querySelector('.message__area');
-do {
-    name = prompt('Please enter your name: ');
-} while(!name);
+
+//name
+
 
 textarea.addEventListener('keyup', (e) => {
     if(e.key === 'Enter') {
@@ -45,3 +48,6 @@ function appendMessage(msg,type) {
 socket.on('message', (msg) => {
     appendMessage(msg, 'incoming');
 })
+
+
+// console.log("HGEloo")
