@@ -1,7 +1,5 @@
 // const io = require('socket.io')(5000);
 const socket = io();
-const express = require('express');
-
 
 const name = document.querySelector('.input-lg')
 

@@ -5,37 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App</title>
-    <link href="/css/style.css" rel="stylesheet"></head>
-    <!-- <script src="/client.js"></script> -->
-    <!-- <script defer src="/public/client.js"></script> -->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Including jquery v3.2.1 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Including socket.io file v2.0.3 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+ 
+</head>
+<!-- <script src="/client.js"></script> -->
+<!-- <script defer src="/public/client.js"></script> -->
+
 <body>
-    
+
     <section class="chat__section">
         <div class="brand">
             <div class="left"></div>
-                <h1>Room Chat</h1>
+            <h1>Room Chat</h1>
         </div>
 
-        
+
         <div class="message__area"></div>
         <div class="msg-field">
 
-            <textarea id="textarea" cols="30" rows="1" placeholder="Write a message...">
-        </textarea>
-        <!-- <form>
+            <textarea id="textarea"></textarea>
+            <div>
+                <input type="button" id="aquote" value="Send"> </button>
+            </div>
+            <!-- <form>
             <input id="textarea" type="text"  placeholder="" required="">
             <button type="submit" id="send-button"> Send </button>
         </form> -->
-    
+
         </div>
     </section>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script defer src="/app.js"></script>
-    
+    <!-- <script src="/socket.io/socket.io.js"></script>
+    <script defer src="/app.js"></script> -->
+    <!-- <script src="../client.js"></script> -->
     <script>
+        //Jquery code starts
+        $('document').ready(function () {
+            //Connecting the socket to host and port
+            var socket = io.connect('http://localhost:5000');
+            socket.on('welcome', function (data) {
 
+            });
+
+            $('#aquote').click(function () {
+                data = $('#textarea').val()
+                console.log(data);
+                //Emitting the event and passing the quote to the server
+                socket.emit('new', { quote: data })
+                $('#textarea').val('');
+            })
+
+
+        })
+	//jquery code ends
     </script>
+     <script src="../client.js"></script>
+
 </body>
 
-</html> 
+</html>

@@ -1,9 +1,23 @@
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT || 5000
+const PORT = 5000;
 
-const http = require('http').createServer(app)
-const io = require('socket.io')(http);
+// var server = require('http').Server(app);
+// const http = require('http').createServer(app)
+var server = require('http').Server(app);
+
+// const io = require('socket.io')(http);
+const io = require('socket.io')(server, {
+  cors: {
+      origin: "http://localhost:5000",
+      methods: ["GET", "POST"],
+      transports: ['websocket', 'polling'],
+      credentials: true
+  },
+  allowEIO3: true
+});
+
+server.listen(5000);
 const fs = require('fs');
 // const PORT = process.env.PORT || 5000
 const path = require('path');
@@ -53,10 +67,20 @@ io.on('connection', (socket) => {
     socket.on('message', (msg) => {
           socket.broadcast.emit('message', msg)
     })
-    socket.send("e")
+    // socket.send("e")
 
 })
 
+
+// io.on('connection', function (socket) {
+  
+//   socket.emit('welcome', { data: 'welcome' });
+
+//   socket.on('new' , function(data) {   
+//           console.log('connected...')
+//           io.sockets.emit( 'next' , { data : data } )
+//     })
+// });
 
 
 app.get('/users/home', (req,res) => {
@@ -64,7 +88,7 @@ app.get('/users/home', (req,res) => {
   res.render('index.html')
 })
 
-http.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
-})
+// http.listen(PORT, () => {
+//     console.log(`Listening on port ${PORT}`)
+// })
 
