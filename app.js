@@ -1,12 +1,7 @@
 const express = require('express')
 const app = express()
 const PORT = 5000;
-
-// var server = require('http').Server(app);
-// const http = require('http').createServer(app)
 var server = require('http').Server(app);
-
-// const io = require('socket.io')(http);
 const io = require('socket.io')(server, {
   cors: {
       origin: "http://localhost:5000",
@@ -35,14 +30,10 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-// app.set('view engine', 'html');
-// app.set('view engine', 'html');
-
-// app.engine('html', require('ejs').renderFile);
-
-//file static public //
-// app.use(express.static(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// parse application/json
+app.use(bodyParser.json())
 
 
 //use
@@ -52,10 +43,6 @@ app.use(cookieParser())
 
 app.use('/users', userRoutes);
 app.use('/users', authRoutes);
-
-// app.get('/users/home', (req,res) => {
-//     res.render('index.html')
-// })
 
 
 
@@ -81,14 +68,3 @@ io.on('connection', (socket) => {
 //           io.sockets.emit( 'next' , { data : data } )
 //     })
 // });
-
-
-app.get('/users/home', (req,res) => {
-
-  res.render('index.html')
-})
-
-// http.listen(PORT, () => {
-//     console.log(`Listening on port ${PORT}`)
-// })
-

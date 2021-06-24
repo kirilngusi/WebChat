@@ -11,6 +11,8 @@ module.exports.login = (req,res) => {
 
 
 module.exports.register = (req,res) => {
+
+    //render userId
     console.log(req.cookies);
 
     res.render('users/register');
@@ -25,47 +27,20 @@ module.exports.postCreate = (req,res) => {
 };
 
 
-// module.exports.home = (req,res) => {
-    
-//     var test = [
-//         {name:"Tuan ", age: 18}
-//     ]
-//     var title = "No render"
-//     var textarea = "Hello"
+module.exports.home = (req,res) => {
+    // var username = req.body.Username;
+    // console.log(username);
+    var cookie = req.cookies.userId;
+    // cookie = 'y1lQoG_pF'
+    var users = db.get('users').value();
+    // console.log(user.id);
+    // console.log(users);
+    // console.log(cookie);
 
-    // textarea.addEventListener('keyup', (e) => {
-    //     if(e.key === 'Enter') {
-    //         sendMessage(e.target.value);
-    //     }
-    // })
-    // function sendMessage(message) {
-    //     let msg = {
-    //         user: name,
-    //         message: message
-    //     }
-    //     //append
-    //     appendMessage(msg,'outgoing');
-    
-    //     //sent to server
-    //     socket.emit('message', msg );
-    // }
+    res.render('index', {
+        users: users,
+        cookie: cookie
 
-    // textarea.addEventListener('keyup', (e) => {
-    //     if(e.key === 'Enter') {
-    //         sendMessage(e.target.value);
-    //     }
-    // })
-    
-    
-//     //Recieve message
-//     io.on('message', (msg) => {
-//         appendMessage(msg, 'incoming');
-//     })
 
-//     res.render('index', {    
-//         // users: db.get('users').value()
-//         title: title,
-//         textarea: textarea
-
-//     });
-// };
+    });
+}

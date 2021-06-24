@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App</title>
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Including jquery v3.2.1 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Including socket.io file v2.0.3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+
+</head>
+
+<body>
+
+    <section class="chat__section">
+        <div class="brand">
+            <div class="left"></div>
+            <h1>Room Chat</h1>
+        </div>
+
+
+
+        <div class="message__area"></div>
+        <div class="msg-field">
+
+            <textarea id="textarea"></textarea>
+            <div class="input-lg">
+
+
+                <% users.forEach(function(user) { %>
+
+                    <%if (user.id==cookie ) { %>
+
+                        <%= user.name %>
+
+                            <% } %>
+
+
+                                <% }); %>
+
+            </div>
+
+            <div>
+                <input type="button" id="aquote" value="Send"> </input>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        //Jquery code starts
+        $('document').ready(function () {
+            //Connecting the socket to host and port
+            var socket = io.connect('http://localhost:5000');
+
+            socket.on('welcome', function (data) {
+
+            });
+
+            $('#aquote').click(function () {
+                data = $('#textarea').val()
+                // console.log(data);
+                //Emitting the event and passing the quote to the server
+                socket.emit('new', { quote: data })
+                $('#textarea').children('input').val('');
+            })
+
+
+            // const name = document.querySelector('.input-lg')
+
+
+
+
+            let textarea = document.querySelector('#textarea');
+            let messageArea = document.querySelector('.message__area');
+
+
+            textarea.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage(e.target.value);
+
+                }
+            })
+
+
+            function sendMessage(message) {
+                let msg = {
+                    user: name,
+                    message: message
+                }
+                //append
+                appendMessage(msg, 'outgoing');
+
+                //sent to server
+                socket.emit('message', msg);
+            }
+
+
+            function appendMessage(msg, type) {
+                let mainDiv = document.createElement('div');
+                let className = type;
+                mainDiv.classList.add(className, 'message');
+
+                let markup = `
+                    <h4> ${msg.user} </h4>
+                    <p> ${msg.message} </p> `
+
+                mainDiv.innerHTML = markup;
+                messageArea.appendChild(mainDiv)
+            }
+
+            //Recieve message
+            socket.on('message', (msg) => {
+                appendMessage(msg, 'incoming');
+            })
+
+
+
+            socket.on('news', function (data) {
+                console.log(data);
+                socket.emit('my other event', { my: 'data' });
+            });
+            //Test event ends here
+            //Main event "next" 
+            socket.on('next', function (data) {
+                // console.log(data);
+                $('#quotes').append("<blockquote>" + data.data.textarea + "</blockquote>")
+            })
+
+
+        })
+	//jquery code ends
+    </script>
+
+</body>
+
+</html>

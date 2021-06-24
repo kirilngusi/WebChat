@@ -17,7 +17,7 @@ router.get('/register', controller.register);
 
 router.post('/register', controller.postCreate);
 
-// router.get('/home', authMiddelwares.requireAuth  , controller.home);
+router.get('/home', authMiddelwares.requireAuth  , controller.home);
 
 router.get('/cookie', (req,res) => {
     res.cookie('user-id', 12345);
